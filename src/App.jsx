@@ -3,10 +3,11 @@ import AddNote from "./components/addNote";
 import { initialData } from "./utils/initialData";
 import { DateTime } from "luxon";
 import NoteList from "./components/noteList";
+import Modal from "./components/model";
 
 export default function Note(){
   const [notes, setNotes] = useState(initialData);
-
+  const [isModalOpen, setModalOpen] = useState(false);
   const id = useId();
 
   function handleAddNote(note){
@@ -38,19 +39,29 @@ export default function Note(){
     })
   }
 
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
   console.log(notes)
 
   return (
     <div>
       <h1>Notely</h1>
-      <AddNote 
-        onAddNote={handleAddNote} 
-        id={id} 
-      />
+      <button onClick={openModal}>Add</button>
       <NoteList 
         notes={notes}
         onDeleteNote={handleDeleteNote}
         onEditnote={handleEditNote}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onModel={openModal}
+      />
+      <Modal 
+        onAddNote={handleAddNote}
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        
       />
     </div>
   );

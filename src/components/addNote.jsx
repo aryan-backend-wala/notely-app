@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function AddNote({onAddNote}){
+export default function AddNote({onAddNote, onClose}){
   const [note, setNote] = useState({
     title: '',
     description: '',
@@ -49,15 +49,19 @@ export default function AddNote({onAddNote}){
           <option value="business">business</option>
         </select>
       </label>
-      <button onClick={() => {
-        onAddNote(note)
-        setNote({
-          title: "",
-          description: "",
-          category: 'personal',
-          isDone: false
-        })
-      }}>Add</button>
+      <div className="modal-actions">
+        <button onClick={onClose}>Cancel</button>
+        <button onClick={() => {
+          onAddNote(note)
+          setNote({
+            title: "",
+            description: "",
+            category: 'personal',
+            isDone: false
+          })
+          onClose()
+        }}>Add</button>
+      </div>
     </>
   );
 }

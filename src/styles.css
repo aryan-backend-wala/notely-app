@@ -7,12 +7,16 @@ ul > li {
   list-style-type: none;
 }
 
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
 .card {
-  max-width: 403px;
   height: 248px;
   background-color: #EEEEEE;
   border-radius: 16px;
-  margin: 24px;
   padding: 0 20px;
 }
 
@@ -79,6 +83,9 @@ input[type="checkbox"] {
   color: #1B5E20;
 }
 
-/* #dialog {
-  
-} */
+@media (max-width: 500px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

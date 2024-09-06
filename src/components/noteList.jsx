@@ -1,121 +1,60 @@
 import { useRef, useState, useEffect   } from "react";
+import Modal from "./model";
 
-export default function NoteList({notes, onDeleteNote, onEditnote}){
+export default function NoteList({
+  notes, 
+  onDeleteNote, 
+  onEditnote, 
+  isEditing,
+  isOpen,
+  onClose,
+  onModel}){
   return (
-    <>
-      {notes.map((note) => <div key={note.id}>
+    <div className="container">
+      {notes.map((note) => <div key={note.id} className="card">
         <NoteCard 
-        note={note} 
-        onClick={onDeleteNote}
-        onEdit={onEditnote}
-      />
+          note={note}
+          onEdit={onEditnote}
+          onDelete={onDeleteNote}
+          isEditing={isEditing}
+          onModel={onModel}
+        />
+        <h1 className="title">{note.title}</h1>
+        <p className="description">{note.description}</p>
       </div>)}
-    </>
-  );
-}
-
-function NoteCard({note, onClick, onEdit}){
-  const [isEditing, setIsEditing] = useState(false);
-  
-  return (
-    <div className="card">
-      <div className="row">
-        <CategoryColor category={note.category} />
-        <div className="icons-row">
-          <input 
-            type="checkbox"
-            checked={note.isDone}
-            name="isDone"
-            onChange={e => {
-              onEdit({
-                ...note,
-                isDone: e.target.checked
-              })
-            }}
-          />
-          { isEditing && <FunDialog
-            isEditing={isEditing}
-            note={note}
-            setIsEditing={setIsEditing}
-            onEdit={onEdit}
-            />}
-          <button onClick={() => setIsEditing(true)}>
-            <img 
-              src="/icons/edit_icon.svg"
-            />
-          </button>
-          <button onClick={() => onClick(note.id)}>
-            <img 
-              src="/icons/delete_icon.svg"
-            />
-          </button>
-        </div>
-      </div>
-      <h1 className="title">{note.title}</h1>
-      <p className="description">{note.description}</p>
     </div>
   );
 }
 
-function FunDialog({note, isEditing, setIsEditing, onEdit}){
-  const dialogRef = useRef(null)
-  useEffect(() => {
-    if (isEditing) {
-      dialogRef.current?.show(); 
-    } else {
-      dialogRef.current?.close();
-    }
-  }, [isEditing]);
+function NoteCard({note, onEdit, onDelete, isOpen, onClose, onModel}){
   return (
-    <>
-      <dialog id="dialog" ref={dialogRef}>
-              <div>
-                <label>
-                  <input 
-                    type="text"
-                    value={note.title}
-                    name="title"
-                    onChange={(e) => {
-                      onEdit({
-                        ...note,
-                        title: e.target.value
-                      })
-                    }}
-                  />
-                </label>
-                <textarea 
-                  value={note.description}
-                  name="description"
-                  placeholder="this is a description"
-                  onChange={(e) => {
-                    onEdit({
-                      ...note,
-                      description: e.target.value
-                    })
-                  }}
-                />
-                <label>
-                  Category: {" "}
-                  <select 
-                    value={note.category}
-                    name="category"
-                    onChange={(e) => {
-                      onEdit({
-                        ...note,
-                        category: e.target.value
-                      })
-                    }}
-                  >
-                    <option value="personal">personal</option>
-                    <option value="home">home</option>
-                    <option value="business">business</option>
-                  </select>
-                </label>
-                <button onClick={() => setIsEditing(false)}>Save</button>
-              </div>
-            </dialog>
-    </>
-  );
+    <div className="row">
+      <CategoryColor category={note.category} />
+      <div className="icons-row">
+      <input 
+        type="checkbox"
+        checked={note.isDone}
+        name="isDone"
+        onChange={e => {
+          onEdit({
+            ...note,
+            isDone: e.target.checked
+          })
+        }}
+      />
+      <button onClick={onModel}>
+        <img 
+          src="/icons/edit_icon.svg"
+        />
+      </button>
+      <button onClick={() => onDelete(note.id)}>
+        <img 
+          src="/icons/delete_icon.svg"
+        />
+      </button>
+      </div>
+    </div>
+  )
 }
 
 function CategoryColor({ category }) {
