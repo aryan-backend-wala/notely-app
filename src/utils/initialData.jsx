@@ -5,17 +5,15 @@ export const initialData = [
     "description": "Remember to finish task on the board. After finishing give for evaluation Matt.",
     "category": "business",
     "isDone": false,
-    "date": "9/6/2024",
-    "time": "10:55:54 AM"
+    isoTimestamp: "2024-08-06T13:08:13.123+05:30"
   },
   {
     "id": ':r1:11:14:10 AM',
     "title": "Buy a new tea cup",
     "description": "Remember to buy a new tea cup.",
     "category": "home",
-    "isDone": false,
-    "date": "9/6/2024",
-    "time": "10:55:54 AM"
+    "isDone": true,
+    isoTimestamp: "2024-07-06T13:08:13.123+05:30"
   },
   {
     "id": ':r1:11:14:20 AM',
@@ -23,7 +21,6 @@ export const initialData = [
     "description": "Hang out with Marry, friday at 7 pm in Blue Wolf Café",
     "category": "personal",
     "isDone": false,
-    "date": "9/6/2024",
-    "time": "10:55:54 AM"
+    isoTimestamp: "2024-06-06T13:08:13.123+05:30"
   }
 ]

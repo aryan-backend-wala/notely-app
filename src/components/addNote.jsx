@@ -1,22 +1,12 @@
 import { useId, useState } from "react";
 
-export default function AddNote({onAddNote}){
-  const id = useId();
+export default function AddNote({onAddNote, id}){
   const [note, setNote] = useState({
-    id: id,
     title: '',
     description: '',
     category: 'personal',
-    isDone: false,
-    ...getCurrentTimeStamp()
+    isDone: false
   })
-
-  function getCurrentTimeStamp(){
-    return ({
-      date: new Date().toLocaleDateString(),
-      time: new Date().toLocaleTimeString(),
-    })
-  }
 
   return (
     <>
@@ -31,8 +21,7 @@ export default function AddNote({onAddNote}){
             setNote(prevNote => {
               return {
                 ...prevNote, 
-                title: e.target.value,
-                ...getCurrentTimeStamp()
+                title: e.target.value
               }
             })
           }}
@@ -72,14 +61,12 @@ export default function AddNote({onAddNote}){
         {" "} Completed
       </label>
       <button onClick={() => {
-        onAddNote({...note, id: id + note.time })
+        onAddNote(note)
         setNote({
-          id: id,
           title: "",
           description: "",
           category: 'personal',
-          isDone: false,
-          ...getCurrentTimeStamp()
+          isDone: false
         })
       }}>Add</button>
     </>
