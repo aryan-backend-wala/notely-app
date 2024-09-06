@@ -1,6 +1,6 @@
-import { useId, useState } from "react";
+import { useState } from "react";
 
-export default function AddNote({onAddNote, id}){
+export default function AddNote({onAddNote}){
   const [note, setNote] = useState({
     title: '',
     description: '',
@@ -48,17 +48,6 @@ export default function AddNote({onAddNote, id}){
           <option value="home">home</option>
           <option value="business">business</option>
         </select>
-      </label>
-      <label>
-        <input 
-          type="checkbox"
-          checked={note.isDone}
-          name="isDone"
-          onChange={(e) => {
-            setNote({...note, isDone: e.target.checked})
-          }}
-        />
-        {" "} Completed
       </label>
       <button onClick={() => {
         onAddNote(note)
