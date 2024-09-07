@@ -40,7 +40,7 @@ export default function AddNote({isOpen, onClose, onOpen}){
             >
               <FormLabel width={'50%'}>
                 <Text marginBottom={"4px"}>Title</Text>
-                <Input />
+                <Input placeholder='Add title' />
               </FormLabel>
               <FormLabel width={'50%'}>
                 <Text marginBottom={"4px"}>Category</Text>
