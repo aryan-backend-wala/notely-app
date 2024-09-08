@@ -10,13 +10,17 @@ import {
   Checkbox
  } from "@chakra-ui/react";
 import Notes from "./Notes";
+import { useState } from "react";
 
 export default function NoteBody({notes, onDeleteNote, onEditNote}){
-  const personalNotes = notes.filter(
+  const [showAll, setShowAll] = useState(false);
+  const newNotes = showAll ? notes.filter(note => note.isDone) : notes;
+  console.log(showAll)
+  const personalNotes = newNotes.filter(
     note => note.category === 'personal');
-  const homeNotes = notes.filter(
+  const homeNotes = newNotes.filter(
     note => note.category === 'home');
-  const businessNotes = notes.filter(
+  const businessNotes = newNotes.filter(
     note => note.category === 'business');
   return <Box minHeight={'100vh'} margin={'32px 128px 0'}>
     <Text 
@@ -43,34 +47,39 @@ export default function NoteBody({notes, onDeleteNote, onEditNote}){
         <TabPanels maxW={'100px'}>
           <TabPanel padding={'0px'}>
             <Notes 
-              notes={notes}
+              notes={newNotes}
               onDeleteNote={onDeleteNote}
-              onEditNote={onEditNote}
+              onCheck={onEditNote}
             />
           </TabPanel>
           <TabPanel>
             <Notes 
               notes={personalNotes}
               onDeleteNote={onDeleteNote}
+              onCheck={onEditNote}
             /> 
           </TabPanel>
           <TabPanel>
             <Notes 
               notes={homeNotes}
               onDeleteNote={onDeleteNote}
+              onCheck={onEditNote}
             />
           </TabPanel>
           <TabPanel>
             <Notes 
               notes={businessNotes}
               onDeleteNote={onDeleteNote}
+              onCheck={onEditNote}
             />
           </TabPanel>
         </TabPanels>
       </Tabs>
       <Checkbox 
         size={'lg'}
-        defaultChecked={true}>
+        defaultChecked={false}
+        onChange={() => setShowAll(!showAll)}
+      >
         Show only completed notes
       </Checkbox>
     </Flex>

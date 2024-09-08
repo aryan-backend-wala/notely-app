@@ -3,7 +3,7 @@ import React from "react";
 import DeleteAlertDialog from "./AlertDialog";
 import { handleISOString } from "../utils/dateFromIsoString";
 
-export default function Card({note, onDelete, onEdit}){
+export default function Card({note, onDelete, onCheck}){
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = React.useRef()
   return (
@@ -25,7 +25,7 @@ export default function Card({note, onDelete, onEdit}){
             <Checkbox 
               size={'lg'}
               checked={note.isDone}
-              onChange={() => onEdit(note.id)}
+              onChange={() => onCheck(note.id)}
             >
             </Checkbox>
             <IconButton
