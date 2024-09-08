@@ -29,6 +29,7 @@ export default function AddNote({isOpen, onClose, onAdd}){
     category: 'personal',
     isDone: false
   })
+  const maxLength = 200
   return <Modal
         isOpen={isOpen} 
         onClose={onClose} 
@@ -88,13 +89,14 @@ export default function AddNote({isOpen, onClose, onAdd}){
                   fontSize={'14px'}
                   lineHeight={'24px'}
                   letterSpacing={'0.25px'}
-                >0/200</Text>
+                >{note.description.length}/{maxLength}</Text>
               </Flex>
               <Textarea 
                 placeholder={"Add description"}
                 height={'152px'}
                 resize={'none'}
                 name='description'
+                maxLength={200}
                 value={note.description}
                 onChange={(e) => setNote({...note, description: e.target.value})}
               ></Textarea>
@@ -104,9 +106,17 @@ export default function AddNote({isOpen, onClose, onAdd}){
 
         <ModalFooter>
           <Button 
-            mr={3} 
-            onClick={onClose}
+            mr={3}
             variant={"ghost"}
+            onClick={() => {
+              setNote({
+                title: "",
+                description: "",
+                category: "personal",
+                isDone: false
+              })
+              onClose()
+            }}
           >
             Cancel
           </Button>

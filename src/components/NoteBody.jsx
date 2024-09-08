@@ -15,7 +15,6 @@ import { useState } from "react";
 export default function NoteBody({notes, onDeleteNote, onEditNote}){
   const [showAll, setShowAll] = useState(false);
   const newNotes = showAll ? notes.filter(note => note.isDone) : notes;
-  console.log(showAll)
   const personalNotes = newNotes.filter(
     note => note.category === 'personal');
   const homeNotes = newNotes.filter(
@@ -47,7 +46,9 @@ export default function NoteBody({notes, onDeleteNote, onEditNote}){
         <TabPanels maxW={'100px'}>
           <TabPanel padding={'0px'}>
             <Notes 
-              notes={newNotes}
+              notes={newNotes
+
+              }
               onDeleteNote={onDeleteNote}
               onCheck={onEditNote}
             />
