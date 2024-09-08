@@ -19,17 +19,7 @@ export default function Card({note, onDelete}){
         <Flex 
           justify={'space-between'}
         >
-          <Button
-            variant={'solid'}
-            borderRadius={'28px'}
-            isActive={'false'}
-          >
-            <Text
-              fontFamily={'Roboto'}
-              fontWeight={'400'}
-              fontSize={'16px'}
-            >{note.category}</Text>
-          </Button>
+          <CategoryButton note={note} />
           <HStack gap={'20px'}>
             <Checkbox size={'lg'}></Checkbox>
             <IconButton
@@ -86,4 +76,28 @@ export default function Card({note, onDelete}){
       </Flex>
     </Box>
   );
+}
+
+function CategoryButton({note}){
+  const categoryClassMap = {
+    business: 'purple',
+    personal: 'orange',
+    home: 'green',
+  };
+  const color = categoryClassMap[note.category] || 'gray';
+  return <Button
+  variant={'solid'}
+  borderRadius={'28px'}
+  isActive={'false'}
+  colorScheme={color}
+  color={'white'}
+>
+  <Text
+    fontFamily={'Roboto'}
+    fontWeight={'400'}
+    fontSize={'16px'}
+  >
+    {note.category}
+  </Text>
+</Button>
 }
