@@ -7,7 +7,9 @@ import {
   TabPanels, 
   Tab, 
   TabPanel,
-  Checkbox
+  Checkbox,
+  VStack,
+  Image
  } from "@chakra-ui/react";
 import Notes from "./Notes";
 import { useState } from "react";
@@ -44,41 +46,43 @@ export default function NoteBody({notes, onDeleteNote, onCheck, onEdit, onOpen})
         </TabList>
 
         <TabPanels maxW={'100px'}>
-          <TabPanel padding={'0px'}>
-            <Notes 
+          <TabPanel>
+            {notes.length > 0 ? <Notes 
               notes={newNotes}
               onDeleteNote={onDeleteNote}
               onCheck={onCheck}
               onEdit={onEdit}
               open={onOpen}
-            />
+            /> : <ErrorNote />}
           </TabPanel>
           <TabPanel>
-            <Notes 
+            {notes.length > 0 ? <Notes 
               notes={personalNotes}
               onDeleteNote={onDeleteNote}
               onCheck={onCheck}
               onEdit={onEdit}
               open={onOpen}
-            /> 
+            /> : <ErrorNote />} 
           </TabPanel>
           <TabPanel>
-            <Notes 
+            {homeNotes.length > 0 ? <Notes 
               notes={homeNotes}
               onDeleteNote={onDeleteNote}
               onCheck={onCheck}
               onEdit={onEdit}
               open={onOpen}
-            />
+            /> : 
+            <ErrorNote />
+            }
           </TabPanel>
           <TabPanel>
-            <Notes 
+            {notes.length > 0 ? <Notes 
               notes={businessNotes}
               onDeleteNote={onDeleteNote}
               onCheck={onCheck}
               onEdit={onEdit}
               open={onOpen}
-            />
+            /> : <ErrorNote />}
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -93,5 +97,26 @@ export default function NoteBody({notes, onDeleteNote, onCheck, onEdit, onOpen})
   </Box>
 }
 
-
-
+function ErrorNote(){
+  return (
+    <Flex
+              height={'80vh'}
+              width={'80vw'}
+              align={'center'}
+              justify={'center'}
+            >
+              <VStack>
+                <Image 
+                  src="/icons/no_notes.svg"
+                />
+                <Text
+                  paddingTop={'20px'}
+                  fontWeight={'500'}
+                  fontSize={'20px'}
+                  lineHeight={'34px'}
+                  letterSpacing={'0.25px'}
+                >You don’t have any notes</Text>
+              </VStack>
+            </Flex>
+  );
+}
