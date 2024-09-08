@@ -20,15 +20,33 @@ import {
   Textarea 
 } from '@chakra-ui/react'
 import { DateTime } from 'luxon'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export default function AddNote({isOpen, onClose, onAdd}){
+export default function AddNote({isOpen, onClose, onAdd, updateNote}){
   const [note, setNote] = useState({
     title: "",
     description: "",
     category: 'personal',
     isDone: false
   })
+
+  useEffect(() => {
+    if(updateNote){
+      setNote({
+        title: updateNote.title,
+        description: updateNote.description,
+        category: updateNote.category,
+        isDone: updateNote.isDone
+      })
+    } else {
+      setNote({
+        title: "",
+        description: "",
+        category: "personal",
+        isDone: false
+      })
+    }
+  }, [updateNote])
   const maxLength = 200
   return <Modal
         isOpen={isOpen} 
@@ -135,7 +153,7 @@ export default function AddNote({isOpen, onClose, onAdd}){
               })
               onClose();
             }}
-          >Add</Button>
+          >{updateNote ? "Save" : "Add"}</Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

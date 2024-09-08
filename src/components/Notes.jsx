@@ -1,7 +1,7 @@
 import { Grid } from "@chakra-ui/react";
 import Card from "./Card";
 
-export default function Notes({notes, onDeleteNote, onCheck}){
+export default function Notes({notes, onDeleteNote, onCheck, onEdit, open}){
   return <Grid 
     paddingTop={'33px'}
     templateColumns='repeat(3, 1fr)' gap={6}
@@ -12,6 +12,8 @@ export default function Notes({notes, onDeleteNote, onCheck}){
       note={note}
       onDelete={onDeleteNote}
       onCheck={onCheck}
+      onEdit={onEdit}
+      open={open}
     />)}
   </Grid>
 }

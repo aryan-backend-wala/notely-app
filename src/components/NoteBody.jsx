@@ -12,7 +12,7 @@ import {
 import Notes from "./Notes";
 import { useState } from "react";
 
-export default function NoteBody({notes, onDeleteNote, onEditNote}){
+export default function NoteBody({notes, onDeleteNote, onCheck, onEdit, onOpen}){
   const [showAll, setShowAll] = useState(false);
   const newNotes = showAll ? notes.filter(note => note.isDone) : notes;
   const personalNotes = newNotes.filter(
@@ -46,32 +46,38 @@ export default function NoteBody({notes, onDeleteNote, onEditNote}){
         <TabPanels maxW={'100px'}>
           <TabPanel padding={'0px'}>
             <Notes 
-              notes={newNotes
-
-              }
+              notes={newNotes}
               onDeleteNote={onDeleteNote}
-              onCheck={onEditNote}
+              onCheck={onCheck}
+              onEdit={onEdit}
+              open={onOpen}
             />
           </TabPanel>
           <TabPanel>
             <Notes 
               notes={personalNotes}
               onDeleteNote={onDeleteNote}
-              onCheck={onEditNote}
+              onCheck={onCheck}
+              onEdit={onEdit}
+              open={onOpen}
             /> 
           </TabPanel>
           <TabPanel>
             <Notes 
               notes={homeNotes}
               onDeleteNote={onDeleteNote}
-              onCheck={onEditNote}
+              onCheck={onCheck}
+              onEdit={onEdit}
+              open={onOpen}
             />
           </TabPanel>
           <TabPanel>
             <Notes 
               notes={businessNotes}
               onDeleteNote={onDeleteNote}
-              onCheck={onEditNote}
+              onCheck={onCheck}
+              onEdit={onEdit}
+              open={onOpen}
             />
           </TabPanel>
         </TabPanels>

@@ -1,4 +1,4 @@
-import { Box } from "@chakra-ui/react";
+import { Box, useDisclosure } from "@chakra-ui/react";
 import NavBar from "./components/NavBar";
 import NoteBody from "./components/NoteBody";
 import { useState } from "react";
@@ -8,17 +8,29 @@ import { DateTime } from "luxon";
 export default function App(){
   const [notes, setNotes] = useState(initialNotes);
   const [currentNote, setCurrentNote] = useState(null);
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
-  function handleAddNote(note){
+  function handleAddNote(notes){
     if(currentNote){
-      
+      setNotes(prevNote => 
+        prevNote.map(note => 
+          note.id === currentNote.id ? 
+            {
+              ...note,
+              title: notes.title,
+              description: notes.description,
+              category: notes.category,
+            } :
+            note
+        )
+      )
     } else {
       setNotes(prevNote => {
         return [
           ...prevNote,
           {
             id: new Date().toLocaleTimeString(),
-            ...note,
+            ...notes,
             timeStamp: DateTime.now().toISO()
           }
         ]
@@ -39,20 +51,30 @@ export default function App(){
         return note
       }
     }))
-    setCurrentNote(updateNote);
   }
 
-  console.log(notes);
+  function handleEditNote(id){
+    const updateNote = notes.find(note => note.id === id);
+    setCurrentNote(updateNote)
+  }
+
+  // console.log(notes);
 
   return (
     <Box bgColor={'rgba(238, 238, 238, 1)'}>
       <NavBar 
         onAddNote={handleAddNote}
+        note={currentNote}
+        isOpen={isOpen}
+        onOpen={onOpen}
+        onClose={onClose}
       />
       <NoteBody 
         notes={notes}
         onDeleteNote={handleDeleteNote}
-        onEditNote={handleCheckbox}
+        onCheck={handleCheckbox}
+        onEdit={handleEditNote}
+        onOpen={onOpen}
       />
     </Box>
   );

@@ -3,7 +3,7 @@ import React from "react";
 import DeleteAlertDialog from "./AlertDialog";
 import { handleISOString } from "../utils/dateFromIsoString";
 
-export default function Card({note, onDelete, onCheck}){
+export default function Card({note, onDelete, onCheck, onEdit, open}){
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = React.useRef()
   return (
@@ -32,6 +32,10 @@ export default function Card({note, onDelete, onCheck}){
               variant={'outline'}
               icon={<img src="/icons/edit_icon.svg" />}
               isDisabled={note.isDone}
+              onClick={() => {
+                onEdit(note.id)
+                open()
+              }}
             />
             <IconButton 
               variant={'outline'}
