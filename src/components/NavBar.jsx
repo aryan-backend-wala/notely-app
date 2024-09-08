@@ -33,7 +33,7 @@ export default function NavBar({onAddNote}){
       >
         <InputGroup>
           <InputLeftElement>
-            <img src="/public/icons/search_icon.svg" />
+            <img src="/icons/search_icon.svg" />
           </InputLeftElement>
           <Input 
             borderRadius={'8px'}

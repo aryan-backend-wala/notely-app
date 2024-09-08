@@ -24,11 +24,11 @@ export default function Card({note, onDelete}){
             <Checkbox size={'lg'}></Checkbox>
             <IconButton
               variant={'outline'}
-              icon={<img src="public\icons\edit_icon.svg" />}
+              icon={<img src="/icons/edit_icon.svg" />}
             />
             <IconButton 
               variant={'outline'}
-              icon={<img src="public\icons\delete_icon.svg" />}
+              icon={<img src="/icons/delete_icon.svg" />}
               onClick={onOpen}
             />
             <DeleteAlertDialog 
