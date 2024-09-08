@@ -11,7 +11,7 @@ import {
 } from "@chakra-ui/react";
 import AddNote from "./addNote";
 
-export default function NavBar(){
+export default function NavBar({onAddNote}){
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Container 
@@ -54,8 +54,8 @@ export default function NavBar(){
         </Button>
         <AddNote 
           isOpen={isOpen}
-          onOpen={onOpen}
           onClose={onClose}
+          onAdd={onAddNote}
         />
       </Flex>
     </Container>

@@ -19,8 +19,14 @@ import {
   Select,
   Textarea 
 } from '@chakra-ui/react'
+import { useState } from 'react'
 
-export default function AddNote({isOpen, onClose, onOpen}){
+export default function AddNote({isOpen, onClose, onAdd}){
+  const [note, setNote] = useState({
+    title: "",
+    description: "",
+    category: 'personal'
+  })
   return <Modal
         isOpen={isOpen} 
         onClose={onClose} 
@@ -40,12 +46,19 @@ export default function AddNote({isOpen, onClose, onOpen}){
             >
               <FormLabel width={'50%'}>
                 <Text marginBottom={"4px"}>Title</Text>
-                <Input placeholder='Add title' />
+                <Input 
+                  placeholder='Add title'
+                  name='title'
+                  value={note.title}
+                  onChange={(e) => setNote({...note, title: e.target.value})}
+                />
               </FormLabel>
               <FormLabel width={'50%'}>
                 <Text marginBottom={"4px"}>Category</Text>
                 <Select
-                  
+                  name='category'
+                  value={note.category}
+                  onChange={(e) => setNote({...note, category: e.target.value})}
                 >
                   <option value='personal'>Personal</option>
                   <option value='home'>Home</option>
@@ -79,6 +92,9 @@ export default function AddNote({isOpen, onClose, onOpen}){
                 placeholder={"Add description"}
                 height={'152px'}
                 resize={'none'}
+                name='description'
+                value={note.description}
+                onChange={(e) => setNote({...note, description: e.target.value})}
               ></Textarea>
             </FormLabel>
           </FormControl>
@@ -97,6 +113,14 @@ export default function AddNote({isOpen, onClose, onOpen}){
             color={"#fff"}
             borderRadius={"56px"}
             variant={"solid"}
+            onClick={() => {
+              onAdd(note);
+              setNote({
+                title: "",
+                description: "",
+                category: ""
+              })
+            }}
           >Add</Button>
         </ModalFooter>
       </ModalContent>
