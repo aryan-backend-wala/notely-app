@@ -19,13 +19,15 @@ import {
   Select,
   Textarea 
 } from '@chakra-ui/react'
+import { DateTime } from 'luxon'
 import { useState } from 'react'
 
 export default function AddNote({isOpen, onClose, onAdd}){
   const [note, setNote] = useState({
     title: "",
     description: "",
-    category: 'personal'
+    category: 'personal',
+    isDone: false
   })
   return <Modal
         isOpen={isOpen} 
@@ -118,8 +120,10 @@ export default function AddNote({isOpen, onClose, onAdd}){
               setNote({
                 title: "",
                 description: "",
-                category: ""
+                category: "personal",
+                isDone: false
               })
+              onClose();
             }}
           >Add</Button>
         </ModalFooter>

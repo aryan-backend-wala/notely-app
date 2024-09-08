@@ -1,8 +1,9 @@
 import { Box, Button, Checkbox, Flex, HStack, IconButton, Text, useDisclosure, VStack } from "@chakra-ui/react";
 import React from "react";
 import DeleteAlertDialog from "./AlertDialog";
+import { handleISOString } from "../utils/dateFromIsoString";
 
-export default function Card({note, onDelete}){
+export default function Card({note, onDelete, onEdit}){
   const { isOpen, onOpen, onClose } = useDisclosure()
   const cancelRef = React.useRef()
   return (
@@ -21,15 +22,22 @@ export default function Card({note, onDelete}){
         >
           <CategoryButton note={note} />
           <HStack gap={'20px'}>
-            <Checkbox size={'lg'}></Checkbox>
+            <Checkbox 
+              size={'lg'}
+              checked={note.isDone}
+              onChange={() => onEdit(note.id)}
+            >
+            </Checkbox>
             <IconButton
               variant={'outline'}
               icon={<img src="/icons/edit_icon.svg" />}
+              isDisabled={note.isDone}
             />
             <IconButton 
               variant={'outline'}
               icon={<img src="/icons/delete_icon.svg" />}
               onClick={onOpen}
+              isDisabled={note.isDone}
             />
             <DeleteAlertDialog 
               isOpen={isOpen}
@@ -48,7 +56,11 @@ export default function Card({note, onDelete}){
             fontSize={'24px'}
             lineHeight={'33.6px'}
             letterSpacing={'0.25px'}
-          >{note.title}</Text>
+            textDecoration={note.isDone ? 'line-through' : 'none'}
+            color={note.isDone ? 'rgba(33, 33, 33, 0.36)' : 'rgba(33, 33, 33, 0.87)'}
+          >
+            {note.title}
+          </Text>
           <Box 
             width={'363px'}
             height={'75px'}
@@ -60,6 +72,8 @@ export default function Card({note, onDelete}){
               fontSize={'16px'}
               lineHeight={'24px'}
               letterSpacing={'0.5px'}
+              textDecoration={note.isDone ? 'line-through' : 'none'}
+              color={note.isDone ? 'rgba(33, 33, 33, 0.36)' : 'rgba(33, 33, 33, 0.87)'}
             >
               {note.description}
             </Text>
@@ -70,7 +84,15 @@ export default function Card({note, onDelete}){
             justifyContent={'space-between'}
           >
             <Text></Text>
-            <Text>21.01.2023</Text>
+            <Text
+              fontWeight={'400'}
+              fontSize={'14px'}
+              lineHeight={'24px'}
+              letterSpacing={'0.25px'}
+              color={note.isDone ? 'rgba(33, 33, 33, 0.36)' : 'rgba(33, 33, 33, 0.6)'}
+            >
+              {handleISOString(note.timeStamp)}
+            </Text>
           </HStack>
         </VStack>
       </Flex>
@@ -84,13 +106,15 @@ function CategoryButton({note}){
     personal: 'orange',
     home: 'green',
   };
-  const color = categoryClassMap[note.category] || 'gray';
+  const bgColor = note.isDone ? 'gray' : categoryClassMap[note.category]; 
+  const color = note.isDone ? 'black' : 'white' 
   return <Button
   variant={'solid'}
   borderRadius={'28px'}
   isActive={'false'}
-  colorScheme={color}
-  color={'white'}
+  colorScheme={bgColor}
+  color={color}
+  isDisabled={note.isDone}
 >
   <Text
     fontFamily={'Roboto'}

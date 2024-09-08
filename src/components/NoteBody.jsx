@@ -11,7 +11,7 @@ import {
  } from "@chakra-ui/react";
 import Notes from "./Notes";
 
-export default function NoteBody({notes, onDeleteNote}){
+export default function NoteBody({notes, onDeleteNote, onEditNote}){
   const personalNotes = notes.filter(
     note => note.category === 'personal');
   const homeNotes = notes.filter(
@@ -45,6 +45,7 @@ export default function NoteBody({notes, onDeleteNote}){
             <Notes 
               notes={notes}
               onDeleteNote={onDeleteNote}
+              onEditNote={onEditNote}
             />
           </TabPanel>
           <TabPanel>
